@@ -1,12 +1,16 @@
 package tn.esprit.spring.kaddem.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.*;
 
+@Setter
+@Getter
 @Entity
 public class Equipe implements Serializable{
     @Id
@@ -24,7 +28,6 @@ public class Equipe implements Serializable{
     private DetailEquipe detailEquipe;
 
     public Equipe() {
-        // TODO Auto-generated constructor stub
     }
 
     public Equipe(String nomEquipe) {
@@ -59,39 +62,12 @@ public class Equipe implements Serializable{
         this.detailEquipe = detailEquipe;
     }
 
-    public Set<Etudiant> getEtudiants() {
-        return etudiants;
-    }
-
-    public void setEtudiants(Set<Etudiant> etudiants) {
-        this.etudiants = etudiants;
-    }
-
     public DetailEquipe getDetailEquipe() {
         return detailEquipe;
     }
 
     public void setDetailEquipe(DetailEquipe detailEquipe) {
         this.detailEquipe = detailEquipe;
-    }
-
-    public Integer getIdEquipe() {
-        return idEquipe;
-    }
-    public void setIdEquipe(Integer idEquipe) {
-        this.idEquipe = idEquipe;
-    }
-    public String getNomEquipe() {
-        return nomEquipe;
-    }
-    public void setNomEquipe(String nomEquipe) {
-        this.nomEquipe = nomEquipe;
-    }
-    public Niveau getNiveau() {
-        return niveau;
-    }
-    public void setNiveau(Niveau niveau) {
-        this.niveau = niveau;
     }
 
 }
