@@ -6,7 +6,4 @@ import tn.esprit.spring.kaddem.entities.Equipe;
 
 @Repository
 public interface EquipeRepository extends CrudRepository<Equipe,Integer> {
-
-
-
 }

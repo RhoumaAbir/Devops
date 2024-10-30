@@ -60,7 +60,7 @@ public class EquipeServiceImpl implements IEquipeService{
 			if (hasActiveContract(etudiant)) {
 				nbEtudiantsAvecContratsActifs++;
 				if (nbEtudiantsAvecContratsActifs >= 3) {
-					break; // Stop counting if we reach 3 active students
+					break;
 				}
 			}
 		}
@@ -77,7 +77,7 @@ public class EquipeServiceImpl implements IEquipeService{
 		Date dateSysteme = new Date();
 		long differenceInTime = dateSysteme.getTime() - contrat.getDateFinContrat().getTime();
 		long differenceInYears = differenceInTime / (1000L * 60 * 60 * 24 * 365);
-		return differenceInYears > 1; // Contract is expired if it's older than 1 year
+		return differenceInYears > 1;
 	}
 
 	private void updateEquipeLevel(Equipe equipe, int nbEtudiantsAvecContratsActifs) {
