@@ -17,14 +17,13 @@ public class Equipe implements Serializable{
     private Niveau niveau;
     //@ManyToMany(mappedBy="equipes")
     @ManyToMany(cascade =CascadeType.ALL)
-
     @JsonIgnore
     private Set<Etudiant> etudiants;
     @OneToOne
     private DetailEquipe detailEquipe;
 
     public Equipe() {
-        // TODO Auto-generated constructor stub
+
     }
 
     public Equipe(String nomEquipe) {
