@@ -1,15 +1,10 @@
 pipeline {
     agent any
 
-    environment {
-        GITHUB_CREDENTIALS_ID = 'abir_github'
-        SONAR_HOST_URL = 'http://192.168.50.6:9000'
-        SONAR_PROJECT_KEY = 'Devops'
-        SONAR_TOKEN = 'sqa_c31be291ebb4af3922e17e7f0acef56130059e73'
-    }
+   
 
     tools {
-        maven 'Maven'
+       maven 'Maven'
     }
 
     stages {
@@ -31,19 +26,21 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
-            steps {
-                echo 'Running SonarQube analysis...'
-                withMaven(maven: 'Maven') {
-                    sh """
-                        mvn sonar:sonar \
-                        -Dsonar.projectKey=${env.SONAR_PROJECT_KEY} \
-                        -Dsonar.host.url=${env.SONAR_HOST_URL} \
-                        -Dsonar.login=${env.SONAR_TOKEN}
-                    """
-                }
-            }
-        }
+       stage('Code Quality Check via SonarQube') {
+             steps {
+                 script {
+                     // SonarQube analysis
+                     withSonarQubeEnv('SonarQube') {
+                         sh '''
+                             mvn clean verify sonar:sonar \
+                             -Dsonar.projectKey=5SAE6-G2-kaddem \
+                             -Dsonar.projectName="5SAE6 -G2-kaddem" \
+                             -Dsonar.host.url=http://192.168.56.3:9000
+                         '''
+                     }
+                 }
+             }
+         }
     }
 
     post {
