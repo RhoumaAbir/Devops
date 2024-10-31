@@ -10,8 +10,10 @@ import tn.esprit.spring.kaddem.entities.Etudiant;
 import tn.esprit.spring.kaddem.entities.Niveau;
 import tn.esprit.spring.kaddem.repositories.EquipeRepository;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @AllArgsConstructor
@@ -27,10 +29,14 @@ public class EquipeServiceImpl implements IEquipeService{
 		return (equipeRepository.save(e));
 	}
 
-	public  void deleteEquipe(Integer idEquipe){
-		Equipe e=retrieveEquipe(idEquipe);
-		equipeRepository.delete(e);
+	public void deleteEquipe(Integer idEquipe) {
+		Optional<Equipe> equipe = equipeRepository.findById(idEquipe);
+		if (equipe.isEmpty()) {
+			throw new IllegalArgumentException("Equipe not found with id: " + idEquipe);
+		}
+		equipeRepository.delete(equipe.get());
 	}
+
 
 	public Equipe retrieveEquipe(Integer equipeId){
 		return equipeRepository.findById(equipeId).orElse(null);
@@ -41,53 +47,33 @@ public class EquipeServiceImpl implements IEquipeService{
 	}
 
 	public void evoluerEquipes() {
-		List<Equipe> equipes = (List<Equipe>) equipeRepository.findAll();
+		Iterable<Equipe> equipesIterable = equipeRepository.findAll();
+		List<Equipe> equipes = new ArrayList<>();
+		equipesIterable.forEach(equipes::add);
+
 		for (Equipe equipe : equipes) {
-			if (isLevelEligible(equipe)) {
-				int nbEtudiantsAvecContratsActifs = countActiveStudentsWithContracts(equipe);
-				updateEquipeLevel(equipe, nbEtudiantsAvecContratsActifs);
+			if (canPromoteEquipe(equipe)) {
+				equipe.setNiveau(Niveau.SENIOR);
+				equipeRepository.save(equipe);
 			}
 		}
 	}
 
-	private boolean isLevelEligible(Equipe equipe) {
-		return equipe.getNiveau().equals(Niveau.JUNIOR) || equipe.getNiveau().equals(Niveau.SENIOR);
-	}
+	private boolean canPromoteEquipe(Equipe equipe) {
+		if (equipe.getNiveau() != Niveau.JUNIOR) {
+			return false; // No need to check further if not JUNIOR
+		}
 
-	private int countActiveStudentsWithContracts(Equipe equipe) {
-		int nbEtudiantsAvecContratsActifs = 0;
 		for (Etudiant etudiant : equipe.getEtudiants()) {
-			if (hasActiveContract(etudiant)) {
-				nbEtudiantsAvecContratsActifs++;
-				if (nbEtudiantsAvecContratsActifs >= 3) {
-					break;
+			for (Contrat contrat : etudiant.getContrats()) {
+				if (!contrat.isArchived() && contrat.getDateFinContrat().after(new Date())) {
+					return true; // Found a valid contract
 				}
 			}
 		}
-		return nbEtudiantsAvecContratsActifs;
-	}
-
-	private boolean hasActiveContract(Etudiant etudiant) {
-		return etudiant.getContrats().stream()
-				.anyMatch(contrat -> !contrat.getArchive() && isContractExpired(contrat));
+		return false; // No valid contracts found
 	}
 
 
-	private boolean isContractExpired(Contrat contrat) {
-		Date dateSysteme = new Date();
-		long differenceInTime = dateSysteme.getTime() - contrat.getDateFinContrat().getTime();
-		long differenceInYears = differenceInTime / (1000L * 60 * 60 * 24 * 365);
-		return differenceInYears > 1;
-	}
 
-	private void updateEquipeLevel(Equipe equipe, int nbEtudiantsAvecContratsActifs) {
-		if (nbEtudiantsAvecContratsActifs >= 3) {
-			if (equipe.getNiveau().equals(Niveau.JUNIOR)) {
-				equipe.setNiveau(Niveau.SENIOR);
-			} else if (equipe.getNiveau().equals(Niveau.SENIOR)) {
-				equipe.setNiveau(Niveau.EXPERT);
-			}
-			equipeRepository.save(equipe);
-		}
-	}
 }
