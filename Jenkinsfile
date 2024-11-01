@@ -33,8 +33,8 @@ pipeline {
                      withSonarQubeEnv('SonarQube') {
                          sh '''
                              mvn clean verify sonar:sonar \
-                             -Dsonar.projectKey=5SAE6-G2-kaddem \
-                             -Dsonar.projectName="5SAE6 -G2-kaddem" \
+                             -Dsonar.projectKey=5SAE6-G4-kaddem \
+                             -Dsonar.projectName="5SAE6-G4-kaddem" \
                              -Dsonar.host.url=http://192.168.56.3:9000
                          '''
                      }
