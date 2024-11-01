@@ -26,21 +26,17 @@ pipeline {
             }
         }
 
-       stage('Code Quality Check via SonarQube') {
-             steps {
-                 script {
-                     // SonarQube analysis
-                     withSonarQubeEnv('SonarQube') {
-                         sh '''
-                             mvn clean verify sonar:sonar \
-                             -Dsonar.projectKey=5SAE6-G4-kaddem \
-                             -Dsonar.projectName="5SAE6-G4-kaddem" \
-                             -Dsonar.host.url=http://192.168.50.6:9000
-                         '''
-                     }
-                 }
-             }
-        }
+          stage('SonarQube Analysis') {
+                   steps {
+                  sh "mvn sonar:sonar -Dsonar.login=${'sqa_28c1b7500df800b00f51b07545dcac6b6a4605c2'}"
+
+                        }
+              }
+          stage('Nexus') {
+                          steps {
+                              sh 'mvn deploy'
+                          }
+          }
     }
 
     post {
