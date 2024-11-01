@@ -98,9 +98,13 @@ class DepartementServiceImplTest {
     void testDeleteDepartementNotFound() {
         when(departementRepository.findById(1)).thenReturn(Optional.empty());
 
+        // Call deleteDepartement without trying to retrieve it first
         departementService.deleteDepartement(1);
 
+        // Verify that findById was called once
         verify(departementRepository, times(1)).findById(1);
-        verify(departementRepository, never()).delete(any(Departement.class)); // Ensure delete was not called
+        // Verify that delete was never called
+        verify(departementRepository, never()).delete(any(Departement.class));
     }
+
 }
