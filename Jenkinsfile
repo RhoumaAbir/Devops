@@ -1,6 +1,8 @@
 pipeline {
     agent any
 
+
+
     tools {
        maven 'Maven'
     }
@@ -19,30 +21,21 @@ pipeline {
             steps {
                 echo 'Building the application...'
                 withMaven(maven: 'Maven') {
-                    sh 'mvn clean install' // Change this command if necessary
+                    sh 'mvn clean install' // Changer cette commande si nécessaire
                 }
             }
         }
 
-        stage('Run Tests') {
-            steps {
-                echo 'Running unit tests...'
-                withMaven(maven: 'Maven') {
-                    sh 'mvn test'
-                }
-            }
-        }
-
-        stage('Code Quality Check via SonarQube') {
+       stage('Code Quality Check via SonarQube') {
              steps {
                  script {
                      // SonarQube analysis
                      withSonarQubeEnv('SonarQube') {
                          sh '''
                              mvn clean verify sonar:sonar \
-                             -Dsonar.projectKey=sqp_0027321b43c30106a2ca082e87f542b288a71fc5 \
-                             -Dsonar.projectName="Devops" \
-                             -Dsonar.host.url=http://192.168.56.3:9000
+                             -Dsonar.projectKey=5SAE6-G4-kaddem \
+                             -Dsonar.projectName="5SAE6-G4-kaddem" \
+                             -Dsonar.host.url=http://192.168.50.6:9000
                          '''
                      }
                  }
