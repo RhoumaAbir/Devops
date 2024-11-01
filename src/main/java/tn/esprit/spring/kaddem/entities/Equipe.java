@@ -15,7 +15,6 @@ public class Equipe implements Serializable{
     private String nomEquipe;
     @Enumerated(EnumType.STRING)
     private Niveau niveau;
-    //@ManyToMany(mappedBy="equipes")
     @ManyToMany(cascade =CascadeType.ALL)
 
     @JsonIgnore
@@ -24,7 +23,6 @@ public class Equipe implements Serializable{
     private DetailEquipe detailEquipe;
 
     public Equipe() {
-        // TODO Auto-generated constructor stub
     }
 
     public Equipe(String nomEquipe) {
