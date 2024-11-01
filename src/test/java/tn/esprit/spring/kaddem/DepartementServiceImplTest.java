@@ -1,5 +1,6 @@
 package tn.esprit.spring.kaddem;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -13,9 +14,10 @@ import tn.esprit.spring.kaddem.services.DepartementServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
- class DepartementServiceImplTest {
+class DepartementServiceImplTest {
 
     @Mock
     private DepartementRepository departementRepository;
@@ -34,7 +36,7 @@ import java.util.Optional;
     }
 
     @Test
-      void testRetrieveAllDepartements() {
+    void testRetrieveAllDepartements() {
         List<Departement> departements = new ArrayList<>();
         departements.add(departement);
         when(departementRepository.findAll()).thenReturn(departements);
@@ -45,7 +47,7 @@ import java.util.Optional;
     }
 
     @Test
-     void testAddDepartement() {
+    void testAddDepartement() {
         when(departementRepository.save(departement)).thenReturn(departement);
 
         departementService.addDepartement(departement);
@@ -54,7 +56,7 @@ import java.util.Optional;
     }
 
     @Test
-     void testUpdateDepartement() {
+    void testUpdateDepartement() {
         when(departementRepository.save(departement)).thenReturn(departement);
 
         departementService.updateDepartement(departement);
@@ -63,7 +65,7 @@ import java.util.Optional;
     }
 
     @Test
-     void testRetrieveDepartement() {
+    void testRetrieveDepartement() {
         when(departementRepository.findById(1)).thenReturn(Optional.of(departement));
 
         departementService.retrieveDepartement(1);
@@ -72,17 +74,18 @@ import java.util.Optional;
     }
 
     @Test
-     void testRetrieveDepartementNotFound() {
+    void testRetrieveDepartementNotFound() {
         when(departementRepository.findById(1)).thenReturn(Optional.empty());
 
-        departementService.retrieveDepartement(1);
+        assertThrows(NoSuchElementException.class, () -> {
+            departementService.retrieveDepartement(1);
+        });
 
         verify(departementRepository, times(1)).findById(1);
     }
 
-
     @Test
-     void testDeleteDepartement() {
+    void testDeleteDepartement() {
         when(departementRepository.findById(1)).thenReturn(Optional.of(departement));
 
         departementService.deleteDepartement(1);
@@ -92,7 +95,7 @@ import java.util.Optional;
     }
 
     @Test
-     void testDeleteDepartementNotFound() {
+    void testDeleteDepartementNotFound() {
         when(departementRepository.findById(1)).thenReturn(Optional.empty());
 
         departementService.deleteDepartement(1);
