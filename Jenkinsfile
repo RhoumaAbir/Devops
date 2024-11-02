@@ -50,9 +50,9 @@ pipeline {
 
         stage('Deploy to Nexus') {
             steps {
-                echo "Deploying to Nexus"
-                sh 'mvn deploy -DskipTests'
-                echo "Deploying to Nexus completed"
+
+                sh 'mvn deploy '
+
             }
         }
 
