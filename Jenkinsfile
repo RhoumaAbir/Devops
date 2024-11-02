@@ -41,9 +41,9 @@ pipeline {
 
         stage('Build Docker Image') {
                    steps {
-                       echo "Building Docker image..."
+
                        script {
-                           sh "docker build -t \"${registry}/nodemongoapp:5.0\" ."
+                           sh "mvn deploy" ."
                        }
                    }
                }
