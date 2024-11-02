@@ -51,13 +51,6 @@ pipeline {
 
                  stage('Deploy to Nexus') {
                      steps {
-                         script {
-                             // Use the correct Docker registry URL
-                             def registryUrl = "http://${registry}"
-                             echo "Logging into Nexus registry..."
-                             withCredentials([string(credentialsId: 'nexus', variable: 'NEXUS_PASS')]) {
-                                 sh "echo \"${NEXUS_PASS}\" | docker login -u abirrh --docker123-stdin ${registryUrl}"
-                             }
 
                              echo "Pushing Docker image to Nexus registry..."
                              docker.withRegistry(registryUrl, registryCredentials) {
