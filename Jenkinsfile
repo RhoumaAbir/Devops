@@ -48,19 +48,16 @@ pipeline {
                    }
                }
 
+            stage('Deploy to Nexus') {
+                        steps {
+                             script {
+                                  sh 'mvn deploy'
+                             }
+                         }
+            }
 
-                 stages {
-                        stage('Deploy to Nexus') {
-                            steps {
-                                script {
-                                    withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'admin', passwordVariable: 'nexus')]) {
-                                        sh 'mvn deploy -Dusername=$NEXUS_USERNAME -Dpassword=$NEXUS_PASSWORD'
-                                    }
-                                }
-                            }
-                        }
-                    }
-}
+    }
+
 
     post {
         success {
