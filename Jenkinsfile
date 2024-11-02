@@ -50,14 +50,15 @@ pipeline {
 
           stage('Deploy to Nexus') {
           steps{
-          script {
-          docker.withRegistry("http://"+registry,
-          registryCredentials ) {
-          sh('docker push $registry/nodemongoapp:5.0 ')
+          dir(Kaddem) {
+          echo "deploying nexus"
+
+          sh 'mvn deploy -dskipTests'
+           echo "deploying to nexus completed"
           }
           }
           }
-          }
+
 
 
     }
