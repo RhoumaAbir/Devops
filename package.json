@@ -5,17 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "build": "your-build-command"
+    "build": "your-build-command",
+    "build-dev": "your-dev-build-command"
   },
   "dependencies": {
     "express": "^4.17.1"
-  },
-
-  "scripts": {
-    "start": "node index.js",
-    "build": "your-build-command",
-    "build-dev": "your-dev-build-command"
   }
-
-
 }
