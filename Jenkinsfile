@@ -48,16 +48,14 @@ pipeline {
                    }
                }
 
-          stage('Deploy to Nexus') {
-          steps{
+        stage('Deploy to Nexus') {
+            steps {
+                echo "Deploying to Nexus"
+                sh 'mvn deploy -DskipTests'
+                echo "Deploying to Nexus completed"
+            }
+        }
 
-          echo "deploying nexus"
-
-          sh 'mvn deploy -dskipTests'
-           echo "deploying to nexus completed"
-
-          }
-          }
 
 
 
