@@ -47,27 +47,19 @@ pipeline {
                        }
                    }
                }
-               stage('Docker Login') {
-                   steps {
-                       script {
-                           // Replace "your_password" with the actual password
-                           sh 'echo "docker123" | docker login -u abirrh --docker123-stdin http://192.168.50.6:8083'
-                       }
-                   }
-               }
 
 
-               stage('Deploy to Nexus') {
-                   steps {
-                       script {
-                           docker.withRegistry("http://${registry}", registryCredentials) {
-                               echo "Pushing Docker image to Nexus registry..."
-                               sh "docker push \"${registry}/nodemongoapp:5.0\""
-                           }
-                       }
-                   }
-               }
-           }
+                  stage('Deploy to Nexus') {
+                      steps {
+                          script {
+                              docker.withRegistry("http://${registry}", registryCredentials) {
+                                  echo "Pushing Docker image to Nexus registry..."
+                                  sh "docker push \"${registry}/nodemongoapp:5.0\""
+                              }
+                          }
+                      }
+                  }
+              }
 
     post {
         success {
