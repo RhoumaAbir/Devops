@@ -1,14 +1,13 @@
 pipeline {
     agent any
 
-environment {
-registryCredentials = "nexus"
-registry = "192.168.50.6:8083"
-}
-
+    environment {
+        registryCredentials = "nexus"
+        registry = "192.168.50.6:8083"
+    }
 
     tools {
-       maven 'Maven'
+        maven 'Maven'
     }
 
     stages {
@@ -25,28 +24,41 @@ registry = "192.168.50.6:8083"
             steps {
                 echo 'Building the application...'
                 withMaven(maven: 'Maven') {
-                    sh 'mvn clean install' // Changer cette commande si nécessaire
+                    sh 'mvn clean install'
                 }
             }
         }
 
-          stage('SonarQube Analysis') {
-                   steps {
-                  sh "mvn sonar:sonar -Dsonar.login=${'sqa_28c1b7500df800b00f51b07545dcac6b6a4605c2'}"
-
-                        }
-              }
-         stage('Deploy to Nexus') {
-                 steps{
-                     script {
-                          docker.withRegistry("http://"+registry,
-                             registryCredentials ) {
-                         sh('docker push $registry/nodemongoapp:5.0 ')
-                            }
-                                                   }
-                       }
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    // Ensure token value is not hard-coded in a secure environment
+                    def sonarToken = 'sqa_28c1b7500df800b00f51b07545dcac6b6a4605c2'
+                    sh "mvn sonar:sonar -Dsonar.login=${sonarToken}"
                 }
-         }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                echo "Building Docker image..."
+                script {
+                    sh 'docker build -t ${registry}/nodemongoapp:5.0 .'
+                }
+            }
+        }
+
+        stage('Deploy to Nexus') {
+            steps {
+                script {
+                    docker.withRegistry("http://${registry}", registryCredentials) {
+                        echo "Pushing Docker image to Nexus registry..."
+                        sh "docker push ${registry}/nodemongoapp:5.0"
+                    }
+                }
+            }
+        }
+    }
 
     post {
         success {
