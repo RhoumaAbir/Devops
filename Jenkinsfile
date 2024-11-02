@@ -51,11 +51,7 @@ pipeline {
 
                  stage('Deploy to Nexus') {
                      steps {
-
-                             echo "Pushing Docker image to Nexus registry..."
-                             docker.withRegistry(registryUrl, registryCredentials) {
-                                 sh "docker push \"${registry}/nodemongoapp:5.0\""
-                             }
+                         sh 'mvn deploy'
                          }
                      }
                  }
