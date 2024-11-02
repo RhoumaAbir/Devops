@@ -18,10 +18,14 @@
     <distributionManagement>
         <repository>
             <id>deploymentRepo</id>
-            <name>Nexus Repository</name>
             <url>http://192.168.50.6:8081/repository/maven-releases/</url>
         </repository>
+        <snapshotRepository>
+            <id>deploymentRepo-snapshots</id>
+            <url>http://192.168.50.6:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
     </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
