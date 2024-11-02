@@ -51,7 +51,7 @@ pipeline {
 
                  stage('Deploy to Nexus') {
                      steps {
-                        withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'admin', passwordVariable: 'admin')]) {
+                        withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'admin', passwordVariable: 'nexus')]) {
                             sh 'mvn deploy -Dusername=$NEXUS_USERNAME -Dpassword=$NEXUS_PASSWORD'
                         }
 
