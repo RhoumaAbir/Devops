@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+environment {
+registryCredentials = "nexus"
+registry = "192.168.50.6:8083"
+}
 
 
     tools {
@@ -32,12 +36,17 @@ pipeline {
 
                         }
               }
-          stage('Nexus') {
-                          steps {
-                              sh 'mvn deploy'
-                          }
-          }
-    }
+         stage('Deploy to Nexus') {
+                 steps{
+                     script {
+                          docker.withRegistry("http://"+registry,
+                             registryCredentials ) {
+                         sh('docker push $registry/nodemongoapp:5.0 ')
+                            }
+                                                   }
+                       }
+                }
+         }
 
     post {
         success {
