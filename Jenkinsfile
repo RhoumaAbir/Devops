@@ -47,6 +47,18 @@ pipeline {
                        }
                    }
                }
+             stage('Docker Login') {
+                 steps {
+                     script {
+                         // Use Jenkins credentials for the password
+                         withCredentials([string(credentialsId: 'admin', variable: 'NEXUS_PASS')]) {
+                             sh "echo \"${NEXUS_PASS}\" | docker login -u admin --password-stdin http://192.168.50.6:8083"
+                         }
+                     }
+                 }
+             }
+
+
 
                stage('Deploy to Nexus') {
                    steps {
