@@ -48,13 +48,17 @@ pipeline {
                    }
                }
 
-            stage('Deploy to Nexus') {
-                        steps {
-                             script {
-                                  sh 'mvn deploy'
-                             }
-                         }
-            }
+          stage('Deploy to Nexus') {
+          steps{
+          script {
+          docker.withRegistry("http://"+registry,
+          registryCredentials ) {
+          sh('docker push $registry/nodemongoapp:5.0 ')
+          }
+          }
+          }
+          }
+
 
     }
 
