@@ -40,25 +40,25 @@ pipeline {
         }
 
         stage('Build Docker Image') {
-            steps {
-                echo "Building Docker image..."
-                script {
-                    sh 'docker build -t ${registry}/nodemongoapp:5.0 .'
-                }
-            }
-        }
+                   steps {
+                       echo "Building Docker image..."
+                       script {
+                           sh "docker build -t \"${registry}/nodemongoapp:5.0\" ."
+                       }
+                   }
+               }
 
-        stage('Deploy to Nexus') {
-            steps {
-                script {
-                    docker.withRegistry("http://${registry}", registryCredentials) {
-                        echo "Pushing Docker image to Nexus registry..."
-                        sh "docker push ${registry}/nodemongoapp:5.0"
-                    }
-                }
-            }
-        }
-    }
+               stage('Deploy to Nexus') {
+                   steps {
+                       script {
+                           docker.withRegistry("http://${registry}", registryCredentials) {
+                               echo "Pushing Docker image to Nexus registry..."
+                               sh "docker push \"${registry}/nodemongoapp:5.0\""
+                           }
+                       }
+                   }
+               }
+           }
 
     post {
         success {
