@@ -51,7 +51,7 @@ pipeline {
                    steps {
                        script {
                            // Replace "your_password" with the actual password
-                           sh 'echo "your_password" | docker login -u admin --password-stdin http://192.168.50.6:8083'
+                           sh 'echo "docker123" | docker login -u admin --password-stdin http://192.168.50.6:8083'
                        }
                    }
                }
