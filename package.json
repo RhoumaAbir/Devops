@@ -1,12 +1,12 @@
 {
-  "name": "task-manager",
+  "name": "nodemongoapp",
   "version": "1.0.0",
   "description": "A brief description of your app",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "build": "echo 'No build needed'",
-    "build-dev": "echo 'No build needed'"
+    "build": "echo 'Build step here'",
+    "build-dev": "echo 'Development build step here'"
   },
   "dependencies": {
     "express": "^4.17.1"

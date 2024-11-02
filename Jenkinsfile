@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        registryCredentials = "admin/******"
+        registryCredentials = "nexus"
         registry = "192.168.50.6:8083"
     }
 
