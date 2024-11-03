@@ -4,6 +4,8 @@ pipeline {
     environment {
         registryCredentials = "nexus"
         registry = "192.168.50.6:8083"
+          DOCKER_USERNAME = 'abirrh'  // Your Docker username
+          DOCKER_PASSWORD = 'docker123'  // Your Docker password
     }
 
     tools {
@@ -48,23 +50,17 @@ pipeline {
                    }
                }
 
-       stage('Deploy to Nexus') {
-       steps{
-       script {
-       docker.withRegistry("http://"+registry,
-       registryCredentials ) {
-       sh('docker push $registry/nodemongoapp:5.0 ')
-       }
-       }
-       }
-       }
-
-
-
-
-
-    }
-
+          stage('Deploy to Nexus') {
+                    steps {
+                        script {
+                            // Perform docker login using the credentials
+                            sh "echo '${DOCKER_PASSWORD}' | docker login -u '${DOCKER_USERNAME}' --password-stdin ${registry}"
+                            // Push the Docker image
+                            sh "docker push ${registry}/nodemongoapp:5.0"
+                        }
+                    }
+                }
+            }
 
     post {
         success {
