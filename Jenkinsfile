@@ -40,13 +40,6 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to Nexus') {
-                    steps {
-
-                            sh "mvn deploy"
-                        }
-                    }
-
 
         stage('Build Docker Image') {
                    steps {
@@ -57,8 +50,15 @@ pipeline {
                    }
                }
 
+          stage('Deploy to Nexus') {
+                    steps {
 
-}
+                            sh "mvn deploy"
+                        }
+                    }
+
+            }
+
     post {
         success {
             echo 'The build was successful, the deliverable is available in the target directory.'
