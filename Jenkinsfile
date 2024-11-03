@@ -50,14 +50,14 @@ pipeline {
                    }
                }
 
-          stage('Deploy to Nexus') {
-                    steps {
+       stage('Deploy to Nexus') {
+           steps {
+               sh "mvn deploy -DaltDeploymentRepository=deploymentRepo::default::http://192.168.50.6:8081/repository/maven-releases/"
+           }
+       }
 
-                            sh "mvn deploy"
-                        }
-                    }
 
-            }
+}
 
     post {
         success {
