@@ -40,7 +40,14 @@ pipeline {
                 }
             }
         }
+        stage('Deploy to Nexus') {
+                    steps {
 
+                            sh "mvn deploy"
+                        }
+                    }
+
+            }
         stage('Build Docker Image') {
                    steps {
                        echo "Building Docker image..."
@@ -50,14 +57,7 @@ pipeline {
                    }
                }
 
-          stage('Deploy to Nexus') {
-                    steps {
 
-                            sh "mvn deploy"
-                        }
-                    }
-
-            }
 
     post {
         success {
