@@ -55,7 +55,8 @@ pipeline {
                sh "mvn deploy "
            }
        }
-       stages {
+
+
               stage('Test Prometheus') {
                   steps {
                       script {
