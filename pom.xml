@@ -69,8 +69,8 @@
     <distributionManagement>
         <repository>
             <id>deploymentRepo</id>
-            <name>admin</name>
-            <url>http://192.168.50.6:8081/repository/maven-releases/</url>
+            <name>docker-repo</name>
+            <url>http://192.168.50.6:8081/repository/docker-repo/</url>
         </repository>
     </distributionManagement>
 </project>
