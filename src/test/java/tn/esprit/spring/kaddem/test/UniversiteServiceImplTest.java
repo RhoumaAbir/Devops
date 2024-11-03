@@ -13,12 +13,10 @@ import tn.esprit.spring.kaddem.repositories.DepartementRepository;
 import tn.esprit.spring.kaddem.repositories.UniversiteRepository;
 import tn.esprit.spring.kaddem.services.UniversiteServiceImpl;
 
-
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
 
 @ExtendWith(MockitoExtension.class)
 class UniversiteServiceImplTest {
@@ -33,53 +31,57 @@ class UniversiteServiceImplTest {
     private UniversiteServiceImpl universiteService;
 
     @BeforeEach
-    void setUp() {
+    void init() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void testRetrieveAllUniversites() {
+    void shouldRetrieveAllUniversites() {
         List<Universite> universites = new ArrayList<>();
         when(universiteRepository.findAll()).thenReturn(universites);
 
         List<Universite> result = universiteService.retrieveAllUniversites();
+
         assertEquals(universites, result);
         verify(universiteRepository, times(1)).findAll();
     }
 
     @Test
-    void testAddUniversite() {
+    void shouldAddUniversite() {
         Universite universite = new Universite();
         when(universiteRepository.save(universite)).thenReturn(universite);
 
         Universite result = universiteService.addUniversite(universite);
+
         assertEquals(universite, result);
         verify(universiteRepository, times(1)).save(universite);
     }
 
     @Test
-    void testUpdateUniversite() {
+    void shouldUpdateUniversite() {
         Universite universite = new Universite();
         when(universiteRepository.save(universite)).thenReturn(universite);
 
         Universite result = universiteService.updateUniversite(universite);
+
         assertEquals(universite, result);
         verify(universiteRepository, times(1)).save(universite);
     }
 
     @Test
-    void testRetrieveUniversite_Found() {
+    void shouldRetrieveUniversiteWhenFound() {
         Integer idUniversite = 1;
         Universite universite = new Universite();
         when(universiteRepository.findById(idUniversite)).thenReturn(Optional.of(universite));
 
         Universite result = universiteService.retrieveUniversite(idUniversite);
+
         assertEquals(universite, result);
         verify(universiteRepository, times(1)).findById(idUniversite);
     }
 
     @Test
-    void testRetrieveUniversite_NotFound() {
+    void shouldThrowExceptionWhenUniversiteNotFound() {
         Integer idUniversite = 1;
         when(universiteRepository.findById(idUniversite)).thenReturn(Optional.empty());
 
@@ -88,17 +90,18 @@ class UniversiteServiceImplTest {
     }
 
     @Test
-    void testDeleteUniversite() {
+    void shouldDeleteUniversite() {
         Integer idUniversite = 1;
         Universite universite = new Universite();
         when(universiteRepository.findById(idUniversite)).thenReturn(Optional.of(universite));
 
         universiteService.deleteUniversite(idUniversite);
+
         verify(universiteRepository, times(1)).delete(universite);
     }
 
     @Test
-    void testAssignUniversiteToDepartement() {
+    void shouldAssignUniversiteToDepartement() {
         Integer idUniversite = 1;
         Integer idDepartement = 2;
         Universite universite = new Universite();
@@ -108,12 +111,13 @@ class UniversiteServiceImplTest {
         when(departementRepository.findById(idDepartement)).thenReturn(Optional.of(departement));
 
         universiteService.assignUniversiteToDepartement(idUniversite, idDepartement);
+
         assertTrue(universite.getDepartements().contains(departement));
         verify(universiteRepository, times(1)).save(universite);
     }
 
     @Test
-    void testRetrieveDepartementsByUniversite_Found() {
+    void shouldRetrieveDepartementsByUniversiteWhenFound() {
         Integer idUniversite = 1;
         Universite universite = new Universite();
         Set<Departement> departements = new HashSet<>();
@@ -122,12 +126,13 @@ class UniversiteServiceImplTest {
         when(universiteRepository.findById(idUniversite)).thenReturn(Optional.of(universite));
 
         Set<Departement> result = universiteService.retrieveDepartementsByUniversite(idUniversite);
+
         assertEquals(departements, result);
         verify(universiteRepository, times(1)).findById(idUniversite);
     }
 
     @Test
-    void testRetrieveDepartementsByUniversite_NotFound() {
+    void shouldThrowExceptionWhenDepartementsNotFound() {
         Integer idUniversite = 1;
         when(universiteRepository.findById(idUniversite)).thenReturn(Optional.empty());
 
