@@ -47,7 +47,7 @@ pipeline {
                         }
                     }
 
-            }
+
         stage('Build Docker Image') {
                    steps {
                        echo "Building Docker image..."
@@ -58,7 +58,7 @@ pipeline {
                }
 
 
-
+}
     post {
         success {
             echo 'The build was successful, the deliverable is available in the target directory.'
