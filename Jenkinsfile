@@ -55,13 +55,21 @@ pipeline {
                sh "mvn deploy "
            }
        }
-         stage('Test Prometheus') {
+       stages {
+              stage('Test Prometheus') {
                   steps {
-                   sh "docker run -d --name prometheus -p 9090:9090 \ -v /path/to/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus "                 }
+                      script {
+                          sh "mvn test -Dproject=prometheus"
+                      }
+                  }
               }
-        stage('Test Grafana') {
+
+              stage('Test Grafana') {
                   steps {
-                   sh " docker run -d --name grafana -p 3000:3000 \ -e "GF_SECURITY_ADMIN_PASSWORD=admin" grafana/grafana "               }
+                      script {
+                          sh "mvn test -Dproject=grafana"
+                      }
+                  }
               }
 
 }
