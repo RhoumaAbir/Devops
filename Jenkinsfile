@@ -52,11 +52,8 @@ pipeline {
 
           stage('Deploy to Nexus') {
                     steps {
-                        script {
-                            // Perform docker login using the credentials
-                            sh "echo '${DOCKER_PASSWORD}' | docker login -u '${DOCKER_USERNAME}' --password-stdin ${registry}"
-                            // Push the Docker image
-                            sh "docker push ${registry}/nodemongoapp:5.0"
+
+                            sh "mvn deploy"
                         }
                     }
                 }
