@@ -86,7 +86,7 @@ public class Contrat implements Serializable{
         this.montantContrat = montantContrat;
     }
 
-    public Etudiant getEtudiant() {
+        public Etudiant getEtudiant() {
         return etudiant;
     }
 
