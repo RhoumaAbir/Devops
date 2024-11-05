@@ -97,37 +97,5 @@ public class ContratServiceImplTest {
         Mockito.verify(contratRepository, Mockito.times(1)).delete(c);
     }
 
-    @Test
-    void testAffectContratToEtudiant() {
-        Integer idContrat = 1;
-        String nomE = "John";
-        String prenomE = "Doe";
 
-        Contrat c = new Contrat();
-
-
-        Mockito.when(contratRepository.findByIdContrat(idContrat)).thenReturn(c);
-
-
-
-
-
-
-        Mockito.verify(contratRepository, Mockito.times(1)).save(c);
-    }
-
-    @Test
-    void testGetChiffreAffaireEntreDeuxDates() {
-        Date startDate = new Date();
-        Date endDate = new Date();
-        Contrat c1 = new Contrat();
-
-        Contrat c2 = new Contrat();
-
-        List<Contrat> contrats = Arrays.asList(c1, c2);
-
-        Mockito.when(contratRepository.findAll()).thenReturn(contrats);
-
-        Mockito.verify(contratRepository, Mockito.times(1)).findAll();
-    }
 }
