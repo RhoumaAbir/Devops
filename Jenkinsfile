@@ -76,7 +76,7 @@ pipeline {
               stage('Unit Test') {
                      steps{
                          script {
-                             sh('npm test')
+                             sh('mvn test')
                      }
                    }
               }
