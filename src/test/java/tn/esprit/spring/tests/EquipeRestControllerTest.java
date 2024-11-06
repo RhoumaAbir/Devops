@@ -90,7 +90,7 @@ class EquipeRestControllerTest {
     void testAddEquipe() throws Exception {
         EquipeDTO equipeDTO = new EquipeDTO();
         equipeDTO.setNomEquipe("Equipe1");
-        equipeDTO.setNiveau(Niveau.JUNIOR);
+        equipeDTO.setNiveau(Niveau.JUNIOR);  // This uses the enum constant, which will map to "JUNIOR"
 
         Equipe equipe = new Equipe();
         equipe.setIdEquipe(1);
@@ -104,7 +104,7 @@ class EquipeRestControllerTest {
                         .content(objectMapper.writeValueAsString(equipeDTO)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.nomEquipe").value("Equipe1"))
-                .andExpect(jsonPath("$.niveau").value(Matchers.equalTo("Junior"))); // Fix here, expecting the correct casing
+                .andExpect(jsonPath("$.niveau").value(Matchers.equalTo("JUNIOR")));  // Expect "JUNIOR"
 
         verify(equipeService, times(1)).addEquipe(any(Equipe.class));
     }
@@ -136,7 +136,7 @@ class EquipeRestControllerTest {
                         .content(objectMapper.writeValueAsString(equipeDTO)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.nomEquipe").value("Equipe1"))
-                .andExpect(jsonPath("$.niveau").value(Matchers.equalTo("Expert"))); // Fix here, expecting the correct casing
+                .andExpect(jsonPath("$.niveau").value(Matchers.equalTo("EXPERT"))); // Fix here, expecting the correct casing
 
         verify(equipeService, times(1)).updateEquipe(any(Equipe.class));
     }
