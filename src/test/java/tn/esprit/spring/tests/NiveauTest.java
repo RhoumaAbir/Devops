@@ -1,12 +1,29 @@
 package tn.esprit.spring.tests;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import tn.esprit.spring.kaddem.entities.Niveau;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class NiveauTest {
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    @Test
+    void testEnumSerialization() throws Exception {
+        // Test serialization to JSON
+        String juniorJson = objectMapper.writeValueAsString(Niveau.JUNIOR);
+        assertEquals("\"Junior\"", juniorJson);
+
+        String seniorJson = objectMapper.writeValueAsString(Niveau.SENIOR);
+        assertEquals("\"SENIOR\"", seniorJson);
+
+        String expertJson = objectMapper.writeValueAsString(Niveau.EXPERT);
+        assertEquals("\"Expert\"", expertJson);
+    }
+
+    // The existing tests
     @Test
     void testGetValue() {
         assertEquals("Junior", Niveau.JUNIOR.getValue());
@@ -23,3 +40,4 @@ class NiveauTest {
         assertEquals(Niveau.EXPERT, values[2]);
     }
 }
+
