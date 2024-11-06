@@ -1,3 +1,5 @@
+package tn.esprit.spring.tests;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.hamcrest.Matchers;
