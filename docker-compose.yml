@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   mysqldb:
     image: mysql:5.7
@@ -15,7 +13,7 @@ services:
   app-equipe:
     depends_on:
       - mysqldb
-    image: helmi003/equipe-devops:1.0.0
+    build: .
     restart: on-failure
     ports:
       - "8089:8089"
