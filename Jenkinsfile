@@ -4,8 +4,8 @@ pipeline {
     environment {
         registryCredentials = "nexus"
         registry = "192.168.50.6:8083"
-          DOCKER_USERNAME = 'abirrh'  // Your Docker username
-          DOCKER_PASSWORD = 'docker123'  // Your Docker password
+          DOCKER_USERNAME = 'abirrh'
+          DOCKER_PASSWORD = 'docker123'
     }
 
     tools {
@@ -51,15 +51,7 @@ pipeline {
                   }
               }
 
-              stage('Push Docker Image') {
-                  steps {
-                      echo "Pushing Docker image to registry..."
-                      script {
-                          // Pousse l'image vers le registre
-                          sh "docker push ${registry}/kaddemapp:1.0"
-                      }
-                  }
-              }
+
 
        stage('Deploy to Nexus') {
            steps {
