@@ -76,10 +76,17 @@
     </build>
     <distributionManagement>
         <repository>
-            <id>deploymentRepo</id>
-            <name>maven-releases</name>
-            <url>http://192.168.50.6:8081/repository/maven-releases/</url>
+            <id>deploymentRepoSnapshots</id>
+            <name>maven-snapshots</name>
+            <url>http://192.168.50.6:8081/repository/maven-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
     </distributionManagement>
+
 
 </project>
