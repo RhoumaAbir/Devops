@@ -1,8 +1,9 @@
-FROM node:16-alpine
+FROM openjdk:17-jdk-slim
+
 WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm install
-COPY . .
-RUN npm run build-dev
-EXPOSE 5000
-CMD ["npm", "start"]
+
+COPY target/kaddem-0.0.1-SNAPSHOT.jar /app/kaddem.jar
+
+EXPOSE 8085
+
+ENTRYPOINT ["java", "-jar", "/app/kaddem.jar"]
