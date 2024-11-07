@@ -5,7 +5,7 @@ services:
     image: mysql:5.7
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: etudiant_db
+      MYSQL_DATABASE: equipe_db
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
       - "3306:3306"
@@ -15,13 +15,13 @@ services:
   app-equipe:
     depends_on:
       - mysqldb
-    image: walehamdi/etudiant-devops:1.0.0
+    image: helmi003/equipe-devops:1.0.0
     restart: on-failure
     ports:
       - "8089:8089"
     environment:
       SPRING_APPLICATION_JSON: '{
-        "spring.datasource.url": "jdbc:mysql://mysqldb:3306/etudiant_db?&createDatabaseIfNotExist=true",
+        "spring.datasource.url": "jdbc:mysql://mysqldb:3306/equipe_db?&createDatabaseIfNotExist=true",
         "spring.datasource.username": "root",
         "spring.datasource.password": null,
         "spring.jpa.hibernate.ddl-auto": "update",
