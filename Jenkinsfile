@@ -41,14 +41,25 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-                   steps {
-                       echo "Building Docker image..."
-                       script {
-                           sh "docker build -t \"${registry}/nodemongoapp:5.0\" ."
-                       }
-                   }
-               }
+       stage('Build Docker Image') {
+                  steps {
+                      echo "Building Docker image..."
+                      script {
+                          // Construire l'image Docker avec la version spécifiée
+                          sh "docker build -t \"${registry}/kaddemapp:1.0\" ."
+                      }
+                  }
+              }
+
+              stage('Push Docker Image') {
+                  steps {
+                      echo "Pushing Docker image to registry..."
+                      script {
+                          // Pousse l'image vers le registre
+                          sh "docker push ${registry}/kaddemapp:1.0"
+                      }
+                  }
+              }
 
        stage('Deploy to Nexus') {
            steps {
