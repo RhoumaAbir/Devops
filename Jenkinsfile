@@ -45,22 +45,24 @@ stage('Build Docker Image') {
     steps {
         echo "Building Docker image..."
         script {
-            sh "docker build -t \"${registry}/kaddemapp:1.0\" ."
+            // Remplacez `${registry}` par votre nom de dépôt DockerHub si nécessaire
+            sh "docker build -t abir/abirrhouma_g5_kaddem:v1.0.0 ."
         }
     }
 }
-
 
 stage('Pushing Docker Image to DockerHub') {
     steps {
         script {
             echo 'Pushing Docker image to DockerHub...'
 
+            // Remplacez `docker123` par votre vrai mot de passe
             sh 'docker login -u abirrh -p docker123'
             sh 'docker push abir/abirrhouma_g5_kaddem:v1.0.0'
         }
     }
 }
+
 
 
        stage('Deploy to Nexus') {
