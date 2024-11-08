@@ -4,8 +4,7 @@ pipeline {
     environment {
         registryCredentials = "nexus"
         registry = "192.168.50.6:8083"
-          DOCKER_USERNAME = 'abirrh'
-          DOCKER_PASSWORD = 'docker123'
+
     }
 
     tools {
@@ -34,7 +33,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    // Ensure token value is not hard-coded in a secure environment
+
                     def sonarToken = 'sqa_28c1b7500df800b00f51b07545dcac6b6a4605c2'
                     sh "mvn sonar:sonar -Dsonar.login=${sonarToken}"
                 }
@@ -47,13 +46,17 @@ pipeline {
                   steps {
                       echo "Building Docker image..."
                       script {
-                          // Construire l'image Docker avec la version spécifiée
+
                           sh "docker build -t \"${registry}/kaddemapp:1.0\" ."
                       }
                   }
               }
 
-
+stage('Pushing Docker Image'){
+                   steps{
+                       sh "docker push abirrh/abirrh-5sae6-g6-kaddem:latest"
+                   }
+               }
 
        stage('Deploy to Nexus') {
            steps {
