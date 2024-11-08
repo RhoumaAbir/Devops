@@ -1,21 +1,19 @@
-version: "3.8"
-
 services:
   mysqldb:
     image: mysql:5.7
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD:
       MYSQL_DATABASE: university_db
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
       - "3306:3306"
     volumes:
       - db:/var/lib/mysql
 
-  app-equipe:
+  app-university:
     depends_on:
       - mysqldb
-    image: fatmajrad/university-devops:1.0.0
+    build: .
     restart: on-failure
     ports:
       - "8089:8089"
