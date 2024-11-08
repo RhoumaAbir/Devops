@@ -40,13 +40,11 @@ pipeline {
             }
         }
 
-
 stage('Build Docker Image') {
     steps {
         echo "Building Docker image..."
         script {
-            // Remplacez `${registry}` par votre nom de dépôt DockerHub si nécessaire
-            sh "docker build -t abir/abirrhouma_g5_kaddem:v1.0.0 ."
+            sh "docker build -t abirrh/abirrhouma_g5_kaddem:v1.0.0 ."
         }
     }
 }
@@ -56,13 +54,12 @@ stage('Pushing Docker Image to DockerHub') {
         script {
             echo 'Pushing Docker image to DockerHub...'
 
-            // Remplacez `docker123` par votre vrai mot de passe
+            // Remplacez `docker123` par votre mot de passe DockerHub réel
             sh 'docker login -u abirrh -p docker123'
-            sh 'docker push abir/abirrhouma_g5_kaddem:v1.0.0'
+            sh 'docker push abirrh/abirrhouma_g5_kaddem:v1.0.0'
         }
     }
 }
-
 
 
        stage('Deploy to Nexus') {
