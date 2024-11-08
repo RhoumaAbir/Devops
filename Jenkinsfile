@@ -41,16 +41,15 @@ pipeline {
         }
 
 
+stage('Build Docker Image') {
+    steps {
+        echo "Building Docker image..."
+        script {
+            sh "docker build -t \"${registry}/kaddemapp:1.0\" ."
+        }
+    }
+}
 
-       stage('Build Docker Image') {
-                  steps {
-                      echo "Building Docker image..."
-                      script {
-
-                          sh "docker build -t \"${registry}/kaddemapp:1.0\" ."
-                      }
-                  }
-              }
 
 stage('Pushing Docker Image'){
                    steps{
