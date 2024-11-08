@@ -16,7 +16,7 @@ services:
     build: .
     restart: on-failure
     ports:
-      - "8089:8089"
+      - "8085:8085"
     environment:
       SPRING_APPLICATION_JSON: '{
         "spring.datasource.url": "jdbc:mysql://mysqldb:3306/departement_db?&createDatabaseIfNotExist=true",
