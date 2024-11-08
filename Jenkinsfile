@@ -51,11 +51,17 @@ stage('Build Docker Image') {
 }
 
 
-stage('Pushing Docker Image'){
-                   steps{
-                       sh "docker push abirrh/abirrh-5sae6-g6-kaddem:latest"
-                   }
-               }
+stage('Pushing Docker Image to DockerHub') {
+    steps {
+        script {
+            echo 'Pushing Docker image to DockerHub...'
+
+            sh 'docker login -u abirrh -p docker123'
+            sh 'docker push abir/abirrhouma_g5_kaddem:v1.0.0'
+        }
+    }
+}
+
 
        stage('Deploy to Nexus') {
            steps {
